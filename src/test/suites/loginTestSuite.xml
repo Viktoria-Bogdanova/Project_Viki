@@ -1,0 +1,8 @@
+<suite name="LoginTests" thread-count="2" parallel="classes">
+    <test name="LogIn">
+        <classes>
+            <class name="firstLoginTest.Success" />
+            <class name="firstLoginTest.Unsuccessfull" />
+        </classes>
+    </test>
+</suite>

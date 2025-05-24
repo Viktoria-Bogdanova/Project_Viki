@@ -11,17 +11,21 @@ import org.testng.annotations.BeforeMethod;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Properties;
 
 public class TestUti {
     public WebDriver driver;
     public static String url, browser;
+    private int implicitWait;
 
 
     @BeforeMethod
     public void beforeEachTest(){
         readConfig("src/test/resources/config.properties");
         setupDriver();
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(implicitWait));
+        // - possible, but have a better option
         driver.get(url);
     }
 
@@ -37,6 +41,8 @@ public class TestUti {
 
             browser = properties.getProperty("browser");
             url = properties.getProperty("testUrl");
+
+            implicitWait = Integer.parseInt(properties.getProperty("implicitWait"));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
