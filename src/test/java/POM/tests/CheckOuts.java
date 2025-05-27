@@ -12,10 +12,10 @@ public class CheckOuts extends TestUti {
         System.out.println("Започва тест за успешно приключване на поръчка");
 
         // Логваме се
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());  // поправено
         ProductPage productPage = loginPage.login("standard_user", "secret_sauce");
 
-        // Добавяме един продукт
+        // Добавяме продукти
         productPage.addItemToCart("bike-light");
         productPage.addItemToCart("bolt-t-shirt");
         productPage.addItemToCart("fleece-jacket");
