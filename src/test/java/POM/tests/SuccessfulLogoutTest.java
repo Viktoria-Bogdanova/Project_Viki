@@ -17,11 +17,11 @@ public class SuccessfulLogoutTest extends TestUti {
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertTrue(productPage.isAt(),
+        softAssert.assertTrue(productPage.isAt(),//check if we are at ProductPage after login
                 "We are not on the product page after login.");
         productPage.logout();
         softAssert.assertTrue(loginPage.isAt(),
-                "We did not return to the login page after logout.");
+                "We did not return to the login page after logout.");//check if we are return at ProductPage
         softAssert.assertAll();
     }
 }

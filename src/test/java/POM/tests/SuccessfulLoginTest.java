@@ -8,7 +8,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class SuccessfulLoginTest extends TestUti {
-
+//to login with different users
     @Test(dataProvider = "correctUsers")
     public void loginWithMultipleUsers(String userName) {
         // Login

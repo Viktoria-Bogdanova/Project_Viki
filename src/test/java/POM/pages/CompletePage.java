@@ -9,17 +9,17 @@ public class CompletePage extends BasePage {
 
     @FindBy(className = "complete-header")
     private WebElement completeMessage;
-
+//constructor
     public CompletePage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
-
+//method to take text from message
     public String getCompleteMessage() {
         return completeMessage.getText();
 
     }
-
+    //implement isAt
     @Override
     public boolean isAt() {
         return completeMessage.isDisplayed();

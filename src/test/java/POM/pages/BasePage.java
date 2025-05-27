@@ -7,11 +7,11 @@ import java.time.Duration;
 public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
-
+//Constructor
     public BasePage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // чака до 10 секунди
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-
+//abstract method
     public abstract boolean isAt();
 }

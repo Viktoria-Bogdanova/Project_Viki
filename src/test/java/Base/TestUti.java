@@ -16,23 +16,24 @@ import java.util.Map;
 import java.util.Properties;
 
 public class TestUti {
-
+// For parallel test every one of them is with own WEBDriver
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    // Get from properties
     public static String url, browser;
     private int implicitWait;
 
-    // Използвай този метод, когато ти трябва WebDriver в тестовете
+    // Use WEBDriver
     public WebDriver getDriver() {
         return driver.get();
     }
-
+//Аnnotation
     @BeforeMethod
     public void beforeEachTest() {
         readConfig("src/test/resources/config.properties");
         setupDriver();
         getDriver().get(url);
     }
-
+// to close driver after test
     @AfterMethod
     public void tearDown() {
         getDriver().quit();
@@ -47,7 +48,7 @@ public class TestUti {
             browser = properties.getProperty("browser");
             url = properties.getProperty("testUrl");
             implicitWait = Integer.parseInt(properties.getProperty("implicitWait"));
-
+// to have massage if fail is not read
         } catch (IOException e) {
             throw new RuntimeException("Cannot read config file", e);
         }
@@ -85,7 +86,7 @@ public class TestUti {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-features=PasswordLeakDetection");
-
+// to turn off password manager in Chrome
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_enabled", false);

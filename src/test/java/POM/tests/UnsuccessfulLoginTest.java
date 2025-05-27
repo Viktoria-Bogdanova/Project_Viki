@@ -15,7 +15,7 @@ import java.util.List;
 public class UnsuccessfulLoginTest extends TestUti {
 
     @Test(dataProvider = "wrongUsers")
-    public void unsuccessfullLoginTest(String userName, String password) {
+    public void unsuccessfulLoginTest(String userName, String password) {
         LoginPage loginPage = new LoginPage(getDriver());
         loginPage.login(userName, password);
 
@@ -25,7 +25,7 @@ public class UnsuccessfulLoginTest extends TestUti {
                 "Epic sadface: Username and password do not match any user in this service"
         );
     }
-
+//to read from csv
     @DataProvider(name = "wrongUsers")
     public Object[][] readWrongUsers() {
         try (CSVReader csvReader = new CSVReader(new FileReader("src/test/resources/wrongUsers.csv"))) {
@@ -36,7 +36,7 @@ public class UnsuccessfulLoginTest extends TestUti {
                 data[i] = csvData.get(i);
             }
             return data;
-
+//for errors
         } catch (IOException | CsvException e) {
             throw new RuntimeException("Error reading CSV file", e);
         }
