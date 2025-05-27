@@ -10,27 +10,27 @@ public class AddItemsTest extends TestUti {
 
     @Test
     public void addMultipleItemsToCart() {
-        System.out.println("Започва тест за добавяне на 3 продукта в количката");
+        System.out.println("Test starts with adding 3 items in the cart.");
 
         // SoftAssert
         SoftAssert softAssert = new SoftAssert();
 
-        LoginPage loginPage = new LoginPage(getDriver()); // поправено
+        LoginPage loginPage = new LoginPage(getDriver());
         ProductPage productPage = loginPage.login("standard_user", "secret_sauce");
 
-        // Списък с ID частите на продуктите
+        // ID of the products
         String[] items = {"bike-light", "bolt-t-shirt", "fleece-jacket"};
 
         for (String item : items) {
-            System.out.println("Добавям продукт: " + item);
+            System.out.println("Add Product: " + item);
             productPage.addItemToCart(item);
         }
 
         int count = productPage.getCartItemCount();
-        System.out.println("Общо продукти в количката: " + count);
+        System.out.println("All products in the cart: " + count);
 
-        // Проверка с SoftAssert
-        softAssert.assertEquals(count, items.length, "Броят на продуктите в количката не съвпада!");
+        // SoftAssert
+        softAssert.assertEquals(count, items.length, "The number of products in the cart does not match!");
 
         softAssert.assertAll();
     }

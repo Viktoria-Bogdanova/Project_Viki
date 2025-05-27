@@ -16,7 +16,7 @@ public class UnsuccessfulLoginTest extends TestUti {
 
     @Test(dataProvider = "wrongUsers")
     public void unsuccessfullLoginTest(String userName, String password) {
-        LoginPage loginPage = new LoginPage(getDriver()); // Използваме getDriver()
+        LoginPage loginPage = new LoginPage(getDriver());
         loginPage.login(userName, password);
 
         Assert.assertTrue(loginPage.isErrorDisplayed(), "Error message not displayed!");

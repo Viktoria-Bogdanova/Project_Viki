@@ -9,31 +9,31 @@ public class CheckOuts extends TestUti {
 
     @Test
     public void completeCheckoutSuccessfully() {
-        System.out.println("Започва тест за успешно приключване на поръчка");
+        System.out.println("Test for successful order begins");
 
-        // Логваме се
+        //Login
         LoginPage loginPage = new LoginPage(getDriver());  // поправено
         ProductPage productPage = loginPage.login("standard_user", "secret_sauce");
 
-        // Добавяме продукти
+        //Add Items
         productPage.addItemToCart("bike-light");
         productPage.addItemToCart("bolt-t-shirt");
         productPage.addItemToCart("fleece-jacket");
 
-        // Отиваме до количката
+        // Go to cart
         CartPage cartPage = productPage.goToCart();
 
-        // Кликваме Checkout
+        // Click Checkout
         CheckoutStepOnePage checkoutStepOnePage = cartPage.clickCheckout();
 
-        // Попълваме формата
+        // Data for costumer
         CheckoutStepTwoPage checkoutStepTwoPage = checkoutStepOnePage.fillFormAndContinue("Иван", "Иванов", "1000");
 
-        // Завършваме поръчката
+        // Finish Order
         CompletePage completePage = checkoutStepTwoPage.finishCheckout();
 
-        // Проверка
-        Assert.assertTrue(completePage.isAt(), "Поръчката не беше успешно завършена!");
-        Assert.assertEquals(completePage.getCompleteMessage(), "Thank you for your order!", "Съобщението не съвпада.");
+
+        Assert.assertTrue(completePage.isAt(), "The order was not successfully completed!");
+        Assert.assertEquals(completePage.getCompleteMessage(), "Thank you for your order!", "Message does not match.");
     }
 }

@@ -18,7 +18,7 @@ public class Unsuccessfull extends TestUti {
 
     @Test(dataProvider = "wrongUsers")
     public void unsuccessfull(String userName, String password) {
-        WebDriver driver = getDriver(); // Взимаме драйвера правилно
+        WebDriver driver = getDriver();
 
         driver.findElement(By.id("user-name")).click();
         driver.findElement(By.id("user-name")).clear();

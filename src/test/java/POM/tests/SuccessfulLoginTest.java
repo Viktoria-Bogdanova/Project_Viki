@@ -16,7 +16,7 @@ public class SuccessfulLoginTest extends TestUti {
         ProductPage productPage = loginPage.login(userName, "secret_sauce");
 
         // Check if we are at the same page
-        Assert.assertTrue(productPage.isAt(), "Потребителят не беше успешно логнат: " + userName);
+        Assert.assertTrue(productPage.isAt(), "The Login is unsuccessful: " + userName);
     }
 
     @DataProvider(name = "correctUsers")

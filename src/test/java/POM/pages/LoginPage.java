@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginPage extends BasePage {
 
@@ -19,7 +20,6 @@ public class LoginPage extends BasePage {
     @FindBy(css = "[data-test='error']")
     private WebElement errorMessage;
 
-    // Constructor
     public LoginPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
@@ -27,31 +27,34 @@ public class LoginPage extends BasePage {
 
     @Override
     public boolean isAt() {
-        return loginBtn.isDisplayed();
+        return wait.until(ExpectedConditions.visibilityOf(loginBtn)).isDisplayed();
     }
 
-    // Method for successful/unsuccessful login
     public ProductPage login(String userName, String password) {
-        userNameInput.click();
-        userNameInput.clear();
+        wait.until(ExpectedConditions.visibilityOf(userNameInput)).clear();
         userNameInput.sendKeys(userName);
 
-        passwordInput.click();
-        passwordInput.clear();
+        wait.until(ExpectedConditions.visibilityOf(passwordInput)).clear();
         passwordInput.sendKeys(password);
 
-        loginBtn.click();
+        wait.until(ExpectedConditions.elementToBeClickable(loginBtn)).click();
+
         return new ProductPage(driver);
-
     }
 
-    // Check if error message is displayed
     public boolean isErrorDisplayed() {
-        return errorMessage.isDisplayed();
+        try {
+            return wait.until(ExpectedConditions.visibilityOf(errorMessage)).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    // Get the error message text
     public String getErrorMessage() {
-        return errorMessage.getText();
+        try {
+            return wait.until(ExpectedConditions.visibilityOf(errorMessage)).getText();
+        } catch (Exception e) {
+            return "";
+        }
     }
 }

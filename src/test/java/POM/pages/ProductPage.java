@@ -1,15 +1,14 @@
 package POM.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import java.time.Duration;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.By;
 
 public class ProductPage extends BasePage {
+
     @FindBy(className = "title")
     private WebElement pageTitle;
 
@@ -22,45 +21,40 @@ public class ProductPage extends BasePage {
     @FindBy(className = "shopping_cart_link")
     private WebElement cartIcon;
 
-    public ProductPage(WebDriver driver){
+    public ProductPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
 
     @Override
     public boolean isAt() {
-        return pageTitle.isDisplayed();
+        return wait.until(ExpectedConditions.visibilityOf(pageTitle)).isDisplayed();
     }
 
     public LoginPage logout() {
         burgerMenu.click();
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.elementToBeClickable(logoutBtn));
-
-
-        logoutBtn.click();
-
+        wait.until(ExpectedConditions.elementToBeClickable(logoutBtn)).click();
         return new LoginPage(driver);
     }
-    // Добавяме метод за добавяне на продукт по име (itemName)
+
     public void addItemToCart(String itemName) {
         String buttonId = "add-to-cart-sauce-labs-" + itemName;
-        WebElement addButton = driver.findElement(By.id(buttonId));
+        By addButtonLocator = By.id(buttonId);
+        WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(addButtonLocator));
         addButton.click();
     }
-    // Добави този метод тук, в класа ProductPage
+
     public int getCartItemCount() {
         try {
-            WebElement badge = driver.findElement(By.className("shopping_cart_badge"));
+            WebElement badge = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("shopping_cart_badge")));
             return Integer.parseInt(badge.getText());
-        } catch (org.openqa.selenium.NoSuchElementException e) {
-            return 0; // ако няма елемент, значи няма добавени продукти
+        } catch (org.openqa.selenium.TimeoutException e) {
+            return 0; // ако няма значка – количката е празна
         }
     }
-    // Тук добавяш новия метод goToCart()
+
     public CartPage goToCart() {
-        cartIcon.click();
+        wait.until(ExpectedConditions.elementToBeClickable(cartIcon)).click();
         return new CartPage(driver);
     }
 }

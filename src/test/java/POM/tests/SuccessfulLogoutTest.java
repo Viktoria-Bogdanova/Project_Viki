@@ -10,15 +10,18 @@ public class SuccessfulLogoutTest extends TestUti {
 
     @Test
     public void successfulLogoutTest() {
-        // Използваме getDriver(), вместо директно driver
+        // Use getDriver(), instead driver
         LoginPage loginPage = new LoginPage(getDriver());
-        ProductPage productPage = loginPage.login("standard_user", "secret_sauce");
+        ProductPage productPage = loginPage.login("standard_user",
+                "secret_sauce");
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertTrue(productPage.isAt(), "Не се намираме на страницата с продукти след логин.");
+        softAssert.assertTrue(productPage.isAt(),
+                "We are not on the product page after login.");
         productPage.logout();
-        softAssert.assertTrue(loginPage.isAt(), "Не се върнахме на login страницата след logout.");
+        softAssert.assertTrue(loginPage.isAt(),
+                "We did not return to the login page after logout.");
         softAssert.assertAll();
     }
 }
