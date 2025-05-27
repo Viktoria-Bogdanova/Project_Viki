@@ -42,7 +42,6 @@ public class AddItems extends TestUti {
                 Assert.assertEquals(shoppingCartBadge.getText(), "1",
                         "We've added only one item");
 
-
             }
 
             @DataProvider(name = "shoppingItems")

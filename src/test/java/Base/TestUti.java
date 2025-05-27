@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class TestUti {
     public WebDriver driver;
@@ -73,7 +74,11 @@ public class TestUti {
        }
        private WebDriver setupChromeDriver(){
         WebDriverManager.chromedriver().setup();
-        return new ChromeDriver();
+
+           ChromeOptions options = new ChromeOptions();
+           options.addArguments("--disable-features=PasswordLeakDetection");
+
+        return new ChromeDriver(options);
        }
 
 }
