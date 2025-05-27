@@ -12,6 +12,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -77,7 +79,12 @@ public class TestUti {
 
            ChromeOptions options = new ChromeOptions();
            options.addArguments("--disable-features=PasswordLeakDetection");
-
+// за паролата
+           Map<String, Object> prefs = new HashMap<>();
+           prefs.put("credentials_enable_service", false);                 // no password-saving
+           prefs.put("profile.password_manager_enabled", false);           // no “Save password” bubble
+           prefs.put("profile.password_manager_leak_detection", false);    // **kills the “Change your password” breach popup**
+           options.setExperimentalOption("prefs", prefs);
         return new ChromeDriver(options);
        }
 

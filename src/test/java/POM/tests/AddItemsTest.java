@@ -5,12 +5,16 @@ import POM.pages.LoginPage;
 import POM.pages.ProductPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class AddItemsTest extends TestUti {
 
     @Test
     public void addMultipleItemsToCart() {
         System.out.println("Започва тест за добавяне на 3 продукта в количката");
+
+        //SoftAssert
+        SoftAssert softAssert = new SoftAssert();
 
         LoginPage loginPage = new LoginPage(driver);
         ProductPage productPage = loginPage.login("standard_user", "secret_sauce");
@@ -26,6 +30,10 @@ public class AddItemsTest extends TestUti {
         int count = productPage.getCartItemCount();
         System.out.println("Общо продукти в количката: " + count);
 
-        Assert.assertEquals(count, items.length, "Броят на продуктите в количката не съвпада!");
+        // Проверка с SoftAssert вместо Assert
+        softAssert.assertEquals(count, items.length, "Броят на продуктите в количката не съвпада!");
+
+        // Много важно: това извикване проверява всички натрупани твърдения
+        softAssert.assertAll();
     }
 }

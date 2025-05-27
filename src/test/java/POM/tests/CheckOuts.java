@@ -1,52 +1,39 @@
 package POM.tests;
 
 import Base.TestUti;
-import POM.pages.LoginPage;
-import POM.pages.ProductPage;
-import POM.pages.CartPage;
-import POM.pages.CheckoutPage;
-import POM.pages.CheckoutOverviewPage;
-import POM.pages.CheckoutCompletePage;
+import POM.pages.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class CheckOuts extends TestUti {
 
     @Test
-    public void completeCheckoutWithItems() {
-        System.out.println("=== Започва тест за Checkout с 3 продукта ===");
+    public void completeCheckoutSuccessfully() {
+        System.out.println("Започва тест за успешно приключване на поръчка");
 
-        // Стъпка 1: Логин
+        // Логваме се
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("standard_user", "secret_sauce");
+        ProductPage productPage = loginPage.login("standard_user", "secret_sauce");
 
-        // Стъпка 2: Добавяне на 3 продукта
-        ProductPage productPage = new ProductPage(driver);
-        String[] items = {"bike-light", "bolt-t-shirt", "fleece-jacket"};
+        // Добавяме един продукт
+        productPage.addItemToCart("bike-light");
+        productPage.addItemToCart("bolt-t-shirt");
+        productPage.addItemToCart("fleece-jacket");
 
-        for (String item : items) {
-            productPage.addItemToCart(item);
-        }
+        // Отиваме до количката
+        CartPage cartPage = productPage.goToCart();
 
-        // Стъпка 3: Навигиране до количката
-        productPage.goToCart();
+        // Кликваме Checkout
+        CheckoutStepOnePage checkoutStepOnePage = cartPage.clickCheckout();
 
-        // Стъпка 4: Натискане на Checkout бутона
-        CartPage cartPage = new CartPage(driver);
-        cartPage.clickCheckout();
+        // Попълваме формата
+        CheckoutStepTwoPage checkoutStepTwoPage = checkoutStepOnePage.fillFormAndContinue("Иван", "Иванов", "1000");
 
-        // Стъпка 5: Въвеждане на данни
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
-        checkoutPage.enterCheckoutInfo("Име", "Фамилия", "1000");
+        // Завършваме поръчката
+        CompletePage completePage = checkoutStepTwoPage.finishCheckout();
 
-        // Стъпка 6: Финализиране на поръчката
-        CheckoutOverviewPage overviewPage = new CheckoutOverviewPage(driver);
-        overviewPage.clickFinish();
-
-        // Стъпка 7: Потвърждение за успешна поръчка
-        CheckoutCompletePage completePage = new CheckoutCompletePage(driver);
-        Assert.assertTrue(completePage.isOrderComplete(), "Поръчката не беше завършена успешно!");
-
-        System.out.println("=== Поръчката е завършена успешно ===");
+        // Проверка
+        Assert.assertTrue(completePage.isAt(), "Поръчката не беше успешно завършена!");
+        Assert.assertEquals(completePage.getCompleteMessage(), "Thank you for your order!", "Съобщението не съвпада.");
     }
 }

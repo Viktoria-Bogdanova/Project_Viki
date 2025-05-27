@@ -19,6 +19,9 @@ public class ProductPage extends BasePage {
     @FindBy(id = "logout_sidebar_link")
     private WebElement logoutBtn;
 
+    @FindBy(className = "shopping_cart_link")
+    private WebElement cartIcon;
+
     public ProductPage(WebDriver driver){
         super(driver);
         PageFactory.initElements(driver, this);
@@ -54,5 +57,10 @@ public class ProductPage extends BasePage {
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return 0; // ако няма елемент, значи няма добавени продукти
         }
+    }
+    // Тук добавяш новия метод goToCart()
+    public CartPage goToCart() {
+        cartIcon.click();
+        return new CartPage(driver);
     }
 }
