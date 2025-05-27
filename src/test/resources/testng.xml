@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="ParallelTestsOnly" parallel="classes" thread-count="2">
+
+    <test name="SuccessfulLogin">
+        <classes>
+            <class name="POM.tests.SuccessfulLoginTest"/>
+        </classes>
+    </test>
+
+    <test name="CheckOut">
+        <classes>
+            <class name="POM.tests.CheckOuts"/>
+        </classes>
+    </test>
+
+</suite>
