@@ -4,13 +4,7 @@
     <test name="SuccessfulLogin">
         <classes>
             <class name="POM.tests.SuccessfulLoginTest"/>
-        </classes>
-    </test>
-
-    <test name="CheckOut">
-        <classes>
             <class name="POM.tests.CheckOuts"/>
         </classes>
     </test>
-
 </suite>
